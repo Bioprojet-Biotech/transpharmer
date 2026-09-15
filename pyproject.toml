@@ -1,0 +1,38 @@
+[project]
+name = "transpharmer"
+version = "0.1.0"
+description = "Pharmacophore-informed GPT for de novo molecule generation"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.9,<3.10"
+dependencies = [
+    "einops==0.6.0",
+    "fvcore==0.1.5.post20221221",
+    "numpy==1.23.5",
+    "pandas==1.5.3",
+    "pyyaml>=6.0",
+    "rdkit==2022.9.3",
+    "scipy==1.8.0",
+    "torch==1.13.1",
+    "tqdm>=4.64.0",
+]
+
+[project.optional-dependencies]
+benchmark = [
+    "guacamol==0.5.2",
+    "tensorflow==2.11.0",
+]
+
+# Script-style layout (train.py / generate.py / benchmark.py at repo root).
+[tool.uv]
+package = false
+
+# Pull torch from the CUDA 11.7 wheel index, matching the paper environment
+# (pytorch==1.13.1, cuda 11.7). This avoids the CPU-only PyPI build.
+[tool.uv.sources]
+torch = { index = "pytorch-cu117" }
+
+[[tool.uv.index]]
+name = "pytorch-cu117"
+url = "https://download.pytorch.org/whl/cu117"
+explicit = true
